@@ -1,5 +1,5 @@
+variable "aws_vpc_name" {}
 variable "aws_region" {}
-
 variable "aws_instance_type" {}
 variable "aws_key_name" {}
 

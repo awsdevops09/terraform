@@ -9,7 +9,7 @@ resource "aws_instance" "WebInstance" {
   user_data = "${file("install_nginx.sh")}"
 
   tags {
-    Name = "WebServer-${count.index+1}"
+    Name = "WebServer 000-${count.index+1}"
   }
 }
 

@@ -4,7 +4,7 @@ resource "aws_vpc" "MYTFVPC" {
   enable_dns_hostnames = true
 
   tags = {
-    Name = "MYTFVPC"
+    Name = "${var.aws_vpc_name}"
   }
 }
 
@@ -48,6 +48,16 @@ resource "aws_route_table_association" "TFPUBLICRT-AS" {
   count          = "${length(var.aws_subnet_cidr)}"
   subnet_id      = "${element(aws_subnet.PublicSubnet.*.id,count.index)}"
   route_table_id = "${aws_route_table.TFPUBLICRT.id}"
+}
+
+terraform {
+  backend "s3" {
+    encrypt        = "true"
+    bucket         = "terraformawsnorge"
+    key            = "terraform.tfstate"
+    dynamodb_table = "terraform-state-lock-dynamo"
+    region         = "us-east-1"
+  }
 }
 
 resource "aws_security_group" "webservers-sg" {
